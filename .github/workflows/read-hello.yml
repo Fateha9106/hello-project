@@ -1,0 +1,25 @@
+name: Read hello.txt
+
+on:
+  push:
+    branches: [ "main" ]   
+
+jobs:
+  read-hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate file exists
+        run: |
+          if [ ! -f "hello.txt" ]; then
+            echo "hello.txt not found in repo root."
+            ls -la
+            exit 1
+          fi
+
+      - name: Print hello.txt to logs
+        run: |
+          cat hello.txt
